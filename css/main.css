@@ -1,0 +1,423 @@
+@charset "utf-8";
+/*reset css*/
+
+html,body{
+    width: 640px;
+    max-width: 640px;
+    min-width: 640px;
+    margin: 0 auto;
+    height: 100%;
+}
+*{margin:0;padding:0;}
+input,button,select,textarea{outline:none;}
+li{list-style:none;}
+img{border:none;}
+textarea{resize:none;}
+body{color:#666;background:#fff;word-wrap:break-word;font-family:"Microsoft YaHei",Arial;font-size: 62.5%;}
+body,input,textarea{font-size:12px;font-family:"Microsoft YaHei",Arial;}
+.clearfix:after,.wrap:after{/*clearfix*/content:"";display:block;height:0;clear:both;visibility:hidden;}
+input::-webkit-input-placeholder
+{
+    color:#7a7808;
+    background-color: transparent;
+}
+select{appearance:none;-moz-appearance:none;-webkit-appearance:none;background-color: transparent;}
+.bg{
+    background:url("../images/bg.png") no-repeat center bottom;
+    background-size: 100%;
+    width:100%;
+    height:100%;
+    position: relative;
+}
+.logo{
+    position: absolute;
+    display: block;
+    width: 40%;
+    z-index: 9999;
+    top:  3rem;
+    right: 5%;
+}
+.index-img{
+    background: url("../images/index.png") no-repeat center top;
+    background-size: 100%;
+    width:100%;
+    position: relative;
+    height:90%;
+    /*display:none;*/
+
+}
+.index-img a{
+    display: block;
+    width:5rem;
+    background: url("../images/index-btn.png") no-repeat;
+    background-size: 100%;
+    height: 2rem;
+    bottom:2.5rem;
+    left: 50%;
+    position: absolute;
+    margin-left: -2rem;
+}
+.tan-Box{
+    background: url("../images/index-tan.png") no-repeat center top;
+    background-size: 100%;
+    height:100%;
+    width:100%;
+    position:relative;
+    display:none;
+}
+.tan-Box a{
+    display: block;
+    width:3rem;
+    top: 62%;
+    margin-left: -1rem;
+    position: absolute;
+    left: 50%;
+}
+.tan-Box img{
+    display: block;
+    width:100%;
+}
+/*排行榜*/
+.histogram{
+    padding:5.5rem 0 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.histogram .top{
+    display: block;
+    width:70%;
+    margin: 0 auto 2rem;
+}
+.Ranking{
+    margin: 0.8rem 10% 0;
+    overflow: hidden;
+}
+.Ranking span{
+    display: inline-block;
+    width: 20%;
+    font-size: 0.6rem;
+    float: left;
+    color: #fff;
+}
+.Ranking .Progress{
+    width:80%;
+    float: left;
+    height:0.5rem;
+}
+.Ranking .Progress div{
+    width:100%;
+}
+.Ranking .Progress div p{
+    height:0.5rem;
+}
+.Ranking .Progress div p.pro1{
+    background: #dbd944;
+    width: 90%;
+}
+.Ranking .Progress div p.pro2 {
+    background: #dbd944;
+    width: 80%;
+}
+.Ranking .Progress div p.pro3 {
+    background: #dbd944;
+    width: 70%;
+}
+.Ranking .Progress div p.pro4 {
+    background: #dbd944;
+    width: 60%;
+}
+.Ranking .Progress div p.pro5 {
+    background: #dbd944;
+    width: 50%;
+}
+.histogram .word{
+    font-size: .65rem;
+    text-align: center;
+    line-height: 1rem;
+    margin-top: 1.5rem;
+    color: #fff;
+}
+.back{
+    display: block;
+    background: url("../images/back.png") no-repeat;
+    width:4rem;
+    height:2rem;
+    background-size: 100%;
+    margin: 1rem auto 0;
+    clear: both;
+}
+/*照片墙*/
+.photoWall{
+    padding: 5rem 0 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.photoWall .top{
+    display: block;
+    width:45%;
+    margin: 0 auto 1rem;
+}
+.photoWallImg {
+    width:80%;
+    box-sizing: border-box;
+    height: 12.6rem;
+    position: absolute;
+    left:50%;
+    top: 50%;
+    margin-left: -40%;
+    margin-top: -5.5rem;
+}
+.photoWallImg  .img{
+    width:40%;
+    margin-right: 10%;
+    float: left;
+}
+.photoWallImg  .img img{
+    display: block;
+    width:100%;
+}
+.photoWallImg  .img p{
+    font-size: 0.55rem;
+    padding: 0.3rem 0;
+    text-align: center;
+    color: #fff;
+}
+.photoWallImg  .img p span:first-child{
+    margin-right: 0.5rem;
+}
+.message{
+
+}
+#right{
+    width: .3rem;
+    height: 100%;
+    background: #428794;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 1rem;
+}
+#right #bar{
+    border-radius: 50%;
+    width: 0.5rem;
+    height:0.5rem;
+    background: #fff;
+    position: absolute;
+    left: -0.1rem;
+    top: 0;
+}
+#left{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+#content{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.photoWall .back{
+  margin-top: 14.4rem;
+}
+/*照片*/
+.write{
+    border: none;
+    background: url("../images/btn.png") no-repeat center;
+    background-size: 100%;
+    width: 80%;
+    height:2rem;
+    margin:4rem auto 0;
+    display: block;
+    color: #7a7808;
+    font-size: .6rem;
+    padding-left: 1rem;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+.sure-btnDiv{
+    display: none;
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -2.25rem;
+    bottom: 2rem;
+}
+.sure-btn{
+    background: url("../images/sure.png") no-repeat;
+    width:4.5rem;
+    height:3rem;
+    display: block;
+    margin: 1rem auto 0;
+    background-size: 100%;
+}
+.message{
+    display:none;
+}
+.message img{
+    display: block;
+    width:70%;
+    margin: 3rem auto 0;
+}
+.message a{
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width:56%;
+    height:2rem;
+    display: block;
+    margin:0 auto;
+}
+.message .topR-btn{
+background-image: url("../images/top-btn.png");
+    margin-top: 0.8rem;
+}
+.message .pw-btn{
+    background-image: url("../images/sure-btn.png");
+    margin-top: 0.1rem;
+}
+/*检索城市*/
+.cityName{
+    background: #fff;
+    width:70%;
+    margin: 0 auto;
+    text-align: center;
+}
+.cityName li{
+    display: block;
+    height:1.2rem;
+    color: #000;
+    font-size: 0.6rem;
+    text-align: 1.2rem;
+    /*display: none;*/
+}
+.Winning{
+background-size: 100%;
+background:url("../images/Winning_02.png") no-repeat center bottom;
+    position: fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    display: none;
+}
+
+.Winning-mes{
+    position: absolute;
+    top:40%;
+    left:25%;
+    width:50%;
+}
+.Winning-mesImg{
+    position: relative;
+}
+.Winning-mesImg p{
+    font-size: .4rem;
+    color: #fff;
+    position: absolute;
+    bottom: -3.2rem;
+    left: 2.4rem;
+}
+.Winning-mesImg .win-mes{
+    display: block;
+    width:100%;
+    position: absolute;
+
+}
+.Winning .tip{
+    color: #fff;
+    text-align: center;
+    font-size: 0.6rem;
+    margin-top: 16.5rem;
+    line-height: 1rem;
+}
+.canvas{
+    width:80%;
+    margin: 0 auto 0;
+    padding-top: 5rem;
+}
+canvas{
+    display: block;
+    width: 100%;
+}
+.close{
+    position: absolute;
+    right:0;
+    top:-0.5rem;
+    z-index: 22;
+    right: -0.6rem;
+    top: -0.7rem;
+}
+#tc-wrapper1{ height:11rem; position: relative;width:84%;margin:0 auto; }
+
+
+
+.canvasOuter{
+    position: relative;
+    background-image: url(../images/outer-bg.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+}
+.canvasOuter.hide{
+    background-image: none;
+}
+#canvas{
+    background: transparent;
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 3em;
+    padding-bottom: 1em;
+}
+#btn-pre.hide,#btn-next.hide{
+    opacity: 0;
+}
+#btn-pre,#btn-next{
+    position: absolute;
+    top:0;
+    width: 3.5em;
+    height: 100%;
+    transition: 1s;
+}
+#btn-pre{
+    right: 100%;
+}
+#btn-next{
+    left: 100%;
+}
+#btn-pre:after,#btn-next:after{
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 0;
+    height: 0;
+}
+#btn-pre:after{
+    border-top: 2em solid transparent;
+    border-right: 2.5em solid #c4c218;
+    border-bottom: 2em solid transparent;
+}
+#btn-next:after{
+    border-top: 2em solid transparent;
+    border-left: 2.5em solid #c4c218;
+    border-bottom: 2em solid transparent;
+}
+#btn-djsczp{
+    position: absolute;
+    width: 35%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    transition: 1s;
+}
+#btn-djsczp.hide{
+    opacity: 0;
+}
+#hide{
+    opacity: 0;
+    display: none;
+}

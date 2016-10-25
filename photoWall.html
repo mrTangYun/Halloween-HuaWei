@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+	<meta name="apple-touch-fullscreen" content="YES">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="pragram" content="no-cache">
+	<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+<div class="bg tcbox">
+	<img src="images/logo.png" class="logo">
+	<div class="photoWall">
+		<img src="images/pho-tit.png" class="top">
+		<div  class="photoWallImg ">
+			<div id="tc-wrapper1">
+				<div  id="content" class="num-list">
+					<div style="height:1000px">
+						<div class="img">
+						<img src="images/img_03.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_05.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_09.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_11.png">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_03.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_03.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_03.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					<div class="img">
+						<img src="images/img_03.jpg">
+						<p><span>LISA</span><span>天津</span></p>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="photo.html" class="back"></a>
+	</div>
+</div>
+
+<script type="text/javascript" src="js/iScroll.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript">
+
+	var myScroll1,myScroll2;
+	function loaded() {
+		myScroll1 = new iScroll('tc-wrapper1', {
+			scrollbarClass: 'myScrollbar' ,
+			hScrollbar:false,
+			vScroll:true,
+			hideScrollbar: false //是否隐藏滚动条
+		});
+		myScroll2 = new iScroll('tc-wrapper2', {
+			scrollbarClass: 'myScrollbar' ,
+			hScrollbar:false,
+			vScroll:true,
+			hideScrollbar: false //是否隐藏滚动条
+		});
+	}
+	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	document.addEventListener('DOMContentLoaded', loaded, false);
+	/*显示弹层层调用show方法时重新调用new iScroll()*/
+</script>
+</body>
+</html>

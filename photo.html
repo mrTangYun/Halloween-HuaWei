@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<title>万圣节</title>
+	<meta name="apple-touch-fullscreen" content="YES">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="pragram" content="no-cache">
+	<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+  	<script src="./js/hammer.min.js"></script>
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/photo.js"></script>
+</head>
+<body>
+<div class="bg">
+	<img src="images/logo.png" class="logo">
+	<div class="photo">
+		<div class="canvas">
+			<div class="canvasOuter hide">
+				<canvas id="canvas" style="transform: rotate(3.5deg); ">
+					
+				</canvas>
+				<div id="btn-djsczp" class="hide">
+					<img src="./images/btn-djsczp.png" width="100%" alt="">
+				</div>
+				<div id="btn-pre" class="hide"></div>
+				<div id="btn-next" class="hide"></div>
+			</div>
+		</div>
+		<input type="text" class="write" placeholder="输入城市名 争取成为nova星人的聚集地" id="city">
+		<ul class="cityName">
+			<li>北京</li>
+			<li>山西</li>
+			<li>山东</li>
+			<li>深圳</li>
+
+		</ul>
+		<div class="sure-btnDiv"><a href="javascript:;" class="sure-btn"></a></div>
+	</div>
+	<!--输入城市后-->
+	<div class="message">
+		<div class="canvas">
+			<canvas></canvas>
+		</div>
+		<img src="images/word.png">
+		<a href="histogram.html" class="topR-btn"></a>
+		<a href="photoWall.html" class="pw-btn"></a>
+	</div>
+</div>
+<!--弹层-->
+<div class="Winning">
+	<div class="Winning-mes">
+		<div class="Winning-mesImg">
+			<img src="images/win-mes.png" class="win-mes">
+			<p>兑换码:11222222</p>
+			<a href="javascript:;" ><img src="images/close.png" class="close"></a>
+
+		</div>
+	</div>
+	<div class="tip">恭喜获得0.2元友宝代金券，<br/>
+		赶紧保存下来去友宝机器上使用吧 ！</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#city").keyup(function(){
+			$(".cityName li")
+					.hide()
+					.filter(":contains('"+( $(this).val() )+"')")
+					.show();
+		});
+		$(".sure-btnDiv").show();
+		$(".close").click(function(){
+			$(".Winning").hide();
+			$(".message").show();
+		});
+		$(".sure-btn").click(function(){
+			$(".photo").hide();
+			$(".Winning").show();
+		})
+	})
+</script>
+</body>
+</html>
