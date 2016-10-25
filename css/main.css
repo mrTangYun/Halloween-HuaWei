@@ -421,3 +421,7 @@ canvas{
     opacity: 0;
     display: none;
 }
+.hideInputFile{
+    opacity: 0;
+    display: none;
+}

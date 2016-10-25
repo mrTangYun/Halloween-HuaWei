@@ -1,11 +1,3 @@
-//获取微信配置的地址
-var ajax_wx = "http://hyundai.koo7.com/index.php/jsonBack";
-//获取服务器图片的地址
-var ajax_serverid2url = "../serverid2url";		
-
-
-
-
 function ImagesLoad(){
     this.loadedCount = 0;
     this.callback = null;
@@ -30,7 +22,7 @@ ImagesLoad.prototype.add = function(url){
 function Game(){
 	this.canvas = null;
 	this.imageReady = false;
-	this.wxReady = false;
+	this.wxReady = true;
 	this.images = [];
 	this.pic = new Image();
 	this.outerImg = null;
@@ -61,58 +53,27 @@ function Game(){
 		    event.preventDefault();
 		}, false);
 
+		$("#inputFile").on('change', function(event) {
+			event.preventDefault();
+			/* Act on the event */
+			var file    = $(this)[0].files[0];
+			var reader  = new FileReader();
+
+			reader.addEventListener("load", function () {
+			    //preview.src = reader.result;
+			    that.pic.src = reader.result;
+			}, false);
+			if (file) {
+			    reader.readAsDataURL(file);
+			}
+		});
+
 		$("#btn-djsczp").on('click', function(event) {
 			$("#btn-djsczp").addClass('hide');
-			wx.chooseImage({
-			    count: 1, // 默认9
-			    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-			    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-			    success: function (res) {
-			        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-
-					wx.uploadImage({
-					    localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
-					    isShowProgressTips: 1, // 默认为1，显示进度提示
-					    success: function (res) {
-					        var serverId = res.serverId; // 返回图片的服务器端ID
-					        //alert("serverId::"+serverId)
-					        
-					        $.ajax({
-					        	url: ajax_serverid2url,
-					        	type: 'POST',
-					        	dataType: 'json',
-					        	data: {serverId: serverId},
-					        })
-					        .done(function() {
-					        	that.pic.src = localIds;
-					        	console.log("success:获取服务器图片的接口成功");
-					        })
-					        .fail(function() {
-					        	console.log("error:获取服务器图片的接口错误");
-					        	that.pic.src = localIds;
-					        })
-					        .always(function() {
-					        	console.log("complete");
-					        });
-					        
-					    }
-					});		        
-
-  
-			    },
-			    cancel: function(){
-				  	$("#btn-djsczp").show();
-				  	setTimeout(function(){
-				  		$("#btn-djsczp").removeClass('hide');
-				  	},1);
-			    },
-			    fail: function(){
-				  	$("#btn-djsczp").show();
-				  	setTimeout(function(){
-				  		$("#btn-djsczp").removeClass('hide');
-				  	},1);
-			    }
-			});
+			$("#inputFile").click();
+			setTimeout(function(){
+				$("#btn-djsczp").remove();
+			},1000);
 		});
 
 		$("#btn-pre").on('touchstart', function(event) {
@@ -309,45 +270,6 @@ function Game(){
 
 var game = new Game();
 jQuery(document).ready(function($) {
-
-    var url= location.href;
-    var appId="";
-    var timestamp="";
-    var nonceStr="";
-    var signature="";
-    var urlBack="";
-    $.ajax({
-        type: 'GET',
-        url: ajax_wx,
-        data:{"url":url},
-        dataType: 'json',
-        async: false,
-        success: function(data) {
-        	
-        	appId=data.appId;
-        	timestamp=data.timestamp;
-        	nonceStr=data.nonceStr;
-        	signature=data.signature;
-        	urlBack=data.url;
-            wx.config({
-                //debug: true,
-                appId:appId,
-                timestamp: timestamp,
-                nonceStr: nonceStr,
-                signature: signature,
-                jsApiList: [
-                    'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'onMenuShareQQ',
-                    'onMenuShareWeibo',
-                    'chooseImage',
-                    'uploadImage'
-                ]
-            });
-        }
-    });
-
 	var myLoad = new ImagesLoad();
 	myLoad.add('./images/0.png');
 	myLoad.add('./images/1.png');
@@ -358,8 +280,6 @@ jQuery(document).ready(function($) {
 		game.setImageReady(this);
 	}
 	//outerImg.src = "./images/1.png";
-    wx.ready(function () {
-    	game.setWxReady();
-    });	
+   
     
 });
