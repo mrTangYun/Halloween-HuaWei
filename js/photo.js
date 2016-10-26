@@ -84,7 +84,7 @@ function Game(){
 					        	data: {serverId: serverId},
 					        })
 					        .done(function(json) {
-					        	that.pic.src = json.url;
+					        	that.pic.src = 'proxy?url='+json.url;
 					        	console.log("success:获取服务器图片的接口成功");
 					        })
 					        .fail(function() {
