@@ -83,8 +83,8 @@ function Game(){
 					        	dataType: 'json',
 					        	data: {serverId: serverId},
 					        })
-					        .done(function() {
-					        	that.pic.src = localIds;
+					        .done(function(json) {
+					        	that.pic.src = json.url;
 					        	console.log("success:获取服务器图片的接口成功");
 					        })
 					        .fail(function() {
@@ -139,8 +139,8 @@ function Game(){
 		var that = this;
 		var canvas = that.canvas;
 		var ctx = canvas.getContext("2d");
-		canvas.width = 2000;
-		canvas.height = 2450;
+		canvas.width = 600;
+		canvas.height = 700;
 
 		var WIDTH = canvas.width;
 		var HEIGHT = canvas.height;
@@ -159,8 +159,8 @@ function Game(){
 		that.canvas = document.getElementById("canvas");
 		var canvas = that.canvas;
 		var ctx = canvas.getContext("2d");
-		canvas.width = 2000;
-		canvas.height = 2450;
+		canvas.width = 600;
+		canvas.height = 700;
 
 		var WIDTH = canvas.width;
 		var HEIGHT = canvas.height;
