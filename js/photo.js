@@ -122,7 +122,7 @@ function Game(){
 		var cImg = that.cImg;
 		ctx.clearRect(0, 0, WIDTH, HEIGHT);
 		
-		console.log("hello");
+		//console.log("hello");
 		if (that.grayBgImg && !cImg.i){
 			ctx.drawImage(that.grayBgImg,WIDTH*.075,HEIGHT*.065,WIDTH*.854,HEIGHT*.717);
 		}
