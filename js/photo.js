@@ -1,3 +1,6 @@
+var Poto_width = 240;	//生成图片的宽度
+var Poto_height = 280;	//生成图片的高度
+
 function ImagesLoad(){
     this.loadedCount = 0;
     this.callback = null;
@@ -29,6 +32,18 @@ function Game(){
 	this.outerImg = null;
 	this.outerImgIndex = null;
 	this.grayBgImg = null;
+	this.cImg = {
+					i : false, //是否存在数据
+					r : 0,	//旋转
+					x : 0,
+					y : 0,
+					w : 0,
+					h : 0,
+					f : 0, 	//0长宽相等，1比c高，2比c宽,
+					c : 1,	//缩放
+					rx : .5,
+					ry : .5
+				};
 	this.setImageReady = function(images){
 		this.images = images;
 		this.imageReady = true;
@@ -101,15 +116,33 @@ function Game(){
 		var that = this;
 		var canvas = that.canvas;
 		var ctx = canvas.getContext("2d");
-		canvas.width = 2000;
-		canvas.height = 2450;
 
 		var WIDTH = canvas.width;
 		var HEIGHT = canvas.height;
-
+		var cImg = that.cImg;
+		ctx.clearRect(0, 0, WIDTH, HEIGHT);
 		
-		if (that.grayBgImg){
+		console.log("hello");
+		if (that.grayBgImg && !cImg.i){
 			ctx.drawImage(that.grayBgImg,WIDTH*.075,HEIGHT*.065,WIDTH*.854,HEIGHT*.717);
+		}
+		if (cImg.i){
+			ctx.save();
+			ctx.beginPath();
+			ctx.moveTo(WIDTH*.075, HEIGHT*.065);
+			ctx.lineTo(WIDTH*.075+WIDTH*.854,HEIGHT*.065);
+			ctx.lineTo(WIDTH*.075+WIDTH*.854,HEIGHT*.065+HEIGHT*.717);
+			ctx.lineTo(WIDTH*.075,HEIGHT*.065+HEIGHT*.717);
+			ctx.closePath();
+			ctx.fillStyle = "#fff";
+			ctx.fill();
+			ctx.clip();
+			ctx.translate(WIDTH/2,HEIGHT/2);
+			ctx.rotate(cImg.r *Math.PI /180);
+			//console.log(cImg.r);
+			ctx.scale(cImg.c,cImg.c);
+			ctx.drawImage(that.pic,cImg.x,cImg.y,cImg.w,cImg.h);
+			ctx.restore();
 		}
 		ctx.drawImage(that.outerImg,0,0,WIDTH,HEIGHT);
 
@@ -130,6 +163,9 @@ function Game(){
 		var WIDTH = canvas.width;
 		var HEIGHT = canvas.height;
 
+		that.cImg.w = WIDTH;
+		that.cImg.h = HEIGHT;
+
 		var hammertime = new Hammer(canvas);
 		hammertime.get('rotate').set({ enable: true });
 		hammertime.get('pinch').set({ enable: true });
@@ -148,58 +184,26 @@ function Game(){
 				rC = WIDTH / HEIGHT,
 				rI = imgWidth / imgHeight,
 				w,
-				y,
-				cImg = {
-					r : 0,	//旋转
-					x : 0,
-					y : 0,
-					w : WIDTH,
-					h : HEIGHT,
-					f : 0, 	//0长宽相等，1比c高，2比c宽,
-					c : 1,	//缩放
-					rx : .5,
-					ry : .5
-				};
+				y;
 			if (rC > rI){
 				//如果图片的长宽比比canvas的小
 				h =  WIDTH / rI ;
-				cImg.y = (HEIGHT - h)/2 - HEIGHT/2 ;
-				cImg.x = WIDTH / -2;
-				cImg.h = h;
-				cImg.f = 1;
+				that.cImg.y = (HEIGHT - h)/2 - HEIGHT/2 ;
+				that.cImg.x = WIDTH / -2;
+				that.cImg.h = h;
+				that.cImg.f = 1;
 			}
 			else if (rC < rI){
 				//如果图片的长宽比比canvas的大
 				w =  HEIGHT * rI;
-				cImg.x = (WIDTH-w)/2 - WIDTH/2;
-				cImg.y = HEIGHT / -2;
-				cImg.w = w;
-				cImg.f = 2;
+				that.cImg.x = (WIDTH-w)/2 - WIDTH/2;
+				that.cImg.y = HEIGHT / -2;
+				that.cImg.w = w;
+				that.cImg.f = 2;
 			}
-			//console.log("图片加载完毕，画图");
-			$("#btn-pre,#btn-next").hide();
-			draw(ctx,cImg);
-
-			function draw(ctx,cImg){
-				ctx.clearRect(0, 0, WIDTH, HEIGHT);
-				ctx.save();
-				ctx.beginPath();
-				ctx.moveTo(WIDTH*.075, HEIGHT*.065);
-				ctx.lineTo(WIDTH*.075+WIDTH*.854,HEIGHT*.065);
-				ctx.lineTo(WIDTH*.075+WIDTH*.854,HEIGHT*.065+HEIGHT*.717);
-				ctx.lineTo(WIDTH*.075,HEIGHT*.065+HEIGHT*.717);
-				ctx.closePath();
-				ctx.fillStyle = "#fff";
-				ctx.fill();
-				ctx.clip();
-				ctx.translate(WIDTH/2,HEIGHT/2);
-				ctx.rotate(cImg.r *Math.PI /180);
-				//console.log(cImg.r);
-				ctx.scale(cImg.c,cImg.c);
-				ctx.drawImage(img,cImg.x,cImg.y,cImg.w,cImg.h);
-				ctx.restore();
-				ctx.drawImage(that.outerImg,0,0,WIDTH,HEIGHT);
-			}
+			//$("#btn-pre,#btn-next").hide();
+			that.cImg.i = true;
+			that.draw();
 
 			var lastRotate = 0,
 				lastScale = 0,
@@ -212,11 +216,11 @@ function Game(){
 			hammertime.on('rotatemove', function(ev) {
 				//console.log('rotatemove' ,ev);
 				var r = lastRotate - ev.rotation;
-				cImg.r -= r;
-				var radians = cImg.r * Math.PI / 180;
-				cImg.x = cImg.x +  (ev.center.x - lastPan.x) * Math.cos(radians) + (ev.center.y - lastPan.y) * Math.sin(radians);
-				cImg.y = cImg.y +  (ev.center.y - lastPan.y) * Math.cos(radians) - (ev.center.x - lastPan.x) * Math.sin(radians);
-				draw(ctx,cImg);
+				that.cImg.r -= r;
+				var radians = that.cImg.r * Math.PI / 180;
+				that.cImg.x = that.cImg.x +  (ev.center.x - lastPan.x) * Math.cos(radians) + (ev.center.y - lastPan.y) * Math.sin(radians);
+				that.cImg.y = that.cImg.y +  (ev.center.y - lastPan.y) * Math.cos(radians) - (ev.center.x - lastPan.x) * Math.sin(radians);
+				that.draw();
 				lastRotate = ev.rotation;
 				lastPan = ev.center;
 			});
@@ -232,7 +236,7 @@ function Game(){
 			});
 			hammertime.on('pinchmove', function(ev) {
 				//console.log('pinchmove' ,ev.scale);
-				cImg.c -= (lastScale-ev.scale);
+				that.cImg.c -= (lastScale-ev.scale);
 				lastScale = ev.scale;
 			});
 			hammertime.on( "pinchend", function( ev ) {
@@ -248,11 +252,11 @@ function Game(){
 				lastPan = ev.center;
     		});
     		hammertime.on("panmove", function( ev ) {
-				var radians = cImg.r * Math.PI / 180;
-				cImg.x = cImg.x +  2*(ev.center.x - lastPan.x) * Math.cos(radians) + (ev.center.y - lastPan.y) * Math.sin(radians);
-				cImg.y = cImg.y +  2*(ev.center.y - lastPan.y) * Math.cos(radians) - (ev.center.x - lastPan.x) * Math.sin(radians);
+				var radians = that.cImg.r * Math.PI / 180;
+				that.cImg.x = that.cImg.x +  4*(ev.center.x - lastPan.x) * Math.cos(radians) + (ev.center.y - lastPan.y) * Math.sin(radians);
+				that.cImg.y = that.cImg.y +  4*(ev.center.y - lastPan.y) * Math.cos(radians) - (ev.center.x - lastPan.x) * Math.sin(radians);
 				
-				draw(ctx,cImg);
+				that.draw();
 				lastPan = ev.center;
     		});
 		}	
