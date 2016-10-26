@@ -20,6 +20,7 @@ ImagesLoad.prototype.add = function(url){
 }
 
 function Game(){
+	this.canvas2 = null;
 	this.canvas = null;
 	this.imageReady = false;
 	this.wxReady = true;
@@ -117,6 +118,9 @@ function Game(){
 		console.log("开始初始化");
 
 		var that = this;
+		this.canvas2 = document.getElementById("canvas2");
+		this.canvas2.width = 240;
+		this.canvas2.height = 280;
 		that.canvas = document.getElementById("canvas");
 		var canvas = that.canvas;
 		var ctx = canvas.getContext("2d");
@@ -264,7 +268,10 @@ function Game(){
 		this.draw();
 	};
 	this.getBase64 = function(){
-		return this.canvas.toDataURL("image/png");
+		var ctx2 = this.canvas2.getContext("2d");
+		var ctx = this.canvas.getContext("2d");
+		ctx2.drawImage(this.canvas,0,0,this.canvas.width,this.canvas.height,0,0,this.canvas2.width,this.canvas2.height);
+		return this.canvas2.toDataURL("image/png");
 	};
 }
 
