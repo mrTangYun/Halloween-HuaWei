@@ -79,17 +79,15 @@ function Game(){
 			    //preview.src = reader.result;
 			    that.pic.src = reader.result;
 			}, false);
-			if (file) {
+			if(file && /image\/\w+/.test(file.type)){ 
+				$("#btn-djsczp").remove(); 
 			    reader.readAsDataURL(file);
 			}
 		});
 
 		$("#btn-djsczp").on('click', function(event) {
-			$("#btn-djsczp").addClass('hide');
+			//$("#btn-djsczp").addClass('hide');
 			$("#inputFile").click();
-			setTimeout(function(){
-				$("#btn-djsczp").remove();
-			},1000);
 		});
 
 		$("#btn-pre").on('touchstart', function(event) {
@@ -211,8 +209,8 @@ function Game(){
     		});
     		touch.on(canvas, "drag", function( ev ) {
 				var radians = that.cImg.r * Math.PI / 180;
-				that.cImg.x = that.cImg.x +  4*(ev.x - lastPan.x) * Math.cos(radians) + (ev.y - lastPan.y) * Math.sin(radians);
-				that.cImg.y = that.cImg.y +  4*(ev.y - lastPan.y) * Math.cos(radians) - (ev.x - lastPan.x) * Math.sin(radians);
+				that.cImg.x = that.cImg.x +  1/that.cImg.c*5 * ((ev.x - lastPan.x) * Math.cos(radians) + (ev.y - lastPan.y) * Math.sin(radians));
+				that.cImg.y = that.cImg.y +  1/that.cImg.c*5 * ((ev.y - lastPan.y) * Math.cos(radians) - (ev.x - lastPan.x) * Math.sin(radians));
 				
 				that.draw();
 				lastPan = {x :ev.x,y:ev.y};
@@ -228,8 +226,10 @@ function Game(){
 			});
 			touch.on(canvas, "pinchstart pinchend pinch", function(ev){
 				if (ev.type == "pinch"){
-					that.cImg.c -= (lastScale-ev.scale);
+					var _c = that.cImg.c - (lastScale-ev.scale)*2;
+					that.cImg.c = _c < .2 ? .2 : _c;
 				}
+				//console.log(that.cImg.c);
 				that.draw();
 				lastScale = ev.scale;
 			});
