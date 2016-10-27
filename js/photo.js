@@ -165,12 +165,6 @@ function Game(){
 
 		that.cImg.w = WIDTH;
 		that.cImg.h = HEIGHT;
-
-		var hammertime = new Hammer(canvas);
-		hammertime.get('rotate').set({ enable: true });
-		hammertime.get('pinch').set({ enable: true });
-		hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-
 		
 		if (that.grayBgImg){
 			ctx.drawImage(that.grayBgImg,WIDTH*.075,HEIGHT*.065,WIDTH*.854,HEIGHT*.717);
@@ -208,57 +202,38 @@ function Game(){
 			var lastRotate = 0,
 				lastScale = 0,
 				lastPan = {x :0,y:0};
-			hammertime.on('rotatestart', function(ev) {
-				//console.log('rotatestart' ,ev);
-				lastRotate = ev.rotation;
-				lastPan = ev.center;
-			});
-			hammertime.on('rotatemove', function(ev) {
-				//console.log('rotatemove' ,ev);
-				var r = lastRotate - ev.rotation;
-				that.cImg.r -= r;
+
+			touch.on(canvas, "dragstart", function( ev ) {
+				lastPan = {x :ev.x,y:ev.y};
+    		});
+    		touch.on(canvas, "dragend", function( ev ) {
+				lastPan = {x :ev.x,y:ev.y};
+    		});
+    		touch.on(canvas, "drag", function( ev ) {
 				var radians = that.cImg.r * Math.PI / 180;
-				that.cImg.x = that.cImg.x +  (ev.center.x - lastPan.x) * Math.cos(radians) + (ev.center.y - lastPan.y) * Math.sin(radians);
-				that.cImg.y = that.cImg.y +  (ev.center.y - lastPan.y) * Math.cos(radians) - (ev.center.x - lastPan.x) * Math.sin(radians);
-				that.draw();
-				lastRotate = ev.rotation;
-				lastPan = ev.center;
-			});
-			hammertime.on( "rotateend", function( ev ) {
-				//console.log("rotateend" ,ev);
-				lastRotate = ev.rotation;
-				lastPan = ev.center;
-    		});
-
-			hammertime.on('pinchstart', function(ev) {
-				//console.log('pinchstart' ,ev.scale);
-				lastScale = ev.scale;
-			});
-			hammertime.on('pinchmove', function(ev) {
-				//console.log('pinchmove' ,ev.scale);
-				that.cImg.c -= (lastScale-ev.scale);
-				lastScale = ev.scale;
-			});
-			hammertime.on( "pinchend", function( ev ) {
-				//console.log("pinchend" ,ev.scale);
-				lastScale = ev.scale;
-    		});
-
-
-    		hammertime.on("panstart", function( ev ) {
-				lastPan = ev.center;
-    		});
-    		hammertime.on("panend", function( ev ) {
-				lastPan = ev.center;
-    		});
-    		hammertime.on("panmove", function( ev ) {
-				var radians = that.cImg.r * Math.PI / 180;
-				that.cImg.x = that.cImg.x +  4*(ev.center.x - lastPan.x) * Math.cos(radians) + (ev.center.y - lastPan.y) * Math.sin(radians);
-				that.cImg.y = that.cImg.y +  4*(ev.center.y - lastPan.y) * Math.cos(radians) - (ev.center.x - lastPan.x) * Math.sin(radians);
+				that.cImg.x = that.cImg.x +  4*(ev.x - lastPan.x) * Math.cos(radians) + (ev.y - lastPan.y) * Math.sin(radians);
+				that.cImg.y = that.cImg.y +  4*(ev.y - lastPan.y) * Math.cos(radians) - (ev.x - lastPan.x) * Math.sin(radians);
 				
 				that.draw();
-				lastPan = ev.center;
+				lastPan = {x :ev.x,y:ev.y};
     		});
+			touch.on(canvas, "rotate", function(ev){
+				if (ev.fingerStatus == "start"){
+					lastRotate = 0;
+				}
+				var r = lastRotate - ev.rotation;
+				that.cImg.r -= r;
+				that.draw();
+				lastRotate = ev.rotation;
+			});
+			touch.on(canvas, "pinchstart pinchend pinch", function(ev){
+				if (ev.type == "pinch"){
+					that.cImg.c -= (lastScale-ev.scale);
+				}
+				that.draw();
+				lastScale = ev.scale;
+			});
+			
 		}	
 
 		that.bindEvent();
